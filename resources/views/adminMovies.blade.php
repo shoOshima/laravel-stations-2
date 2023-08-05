@@ -25,7 +25,11 @@
           <td>{{ $movie->title}}</td>
           <td>{{ $movie->image_url}}</td>
           <td>{{ $movie->published_year}}</td>
-          <td>{{ $movie->is_showing}}</td>
+          @if($movie->is_showing)
+          <td>上映中</td>
+          @else
+          <td>上映予定</td>
+          @endif
           <td>{{ $movie->description}}</td>
           <td>{{ $movie->created_at	}}</td>
           <td>{{ $movie->updated_at}}</td>

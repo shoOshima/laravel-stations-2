@@ -32,4 +32,6 @@ class CreateMovieRequest extends FormRequest
             'genre' => ['required'],
         ];
     }
+
+
 }
