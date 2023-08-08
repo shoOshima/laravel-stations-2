@@ -43,6 +43,7 @@
 
     public function store(MovieRequest $request){
       $movie = Movie::create($request->validated());
+
         if($movie){
           return redirect()
             ->route('movies');
@@ -52,6 +53,15 @@
         }
     }
 
+    public function destroy(int $id){
 
+      $movie = Movie::where('id',$id)->firstOrFail()->delete();
+   //   $movie = $m->update($request->validated());
+     if($movie){
+      return redirect()->route('movies')->with('message','成功');
+     }else{
+      return redirect()->route('movies')->with('message','失敗');
+     }
+    }
 
   }

@@ -35,9 +35,9 @@ class MovieRequest extends FormRequest
                 $data['is_showing'] =(boolean)true;
             }else{
                 $data['is_showing'] =0;
-            }
-
-            
+            }          
+        }else{
+            $data['is_showing']=0;
         }
 
          return $data;
