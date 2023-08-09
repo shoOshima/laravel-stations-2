@@ -8,7 +8,8 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "seed":"docker compose exec php-container php artisan db:seed"
+        "seed":"docker compose exec php-container php artisan db:seed",
+        "migrate":"docker compose exec php-container php artisan migrate"
     },
     "devDependencies": {
         "axios": "^0.21",
