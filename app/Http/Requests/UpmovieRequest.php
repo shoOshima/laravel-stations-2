@@ -51,7 +51,8 @@ class UpmovieRequest extends FormRequest
             'image_url' => ['required', 'url'],
             'published_year' => ['required'],
             'is_showing' => ['required'],
-            'description' => ['required']
+            'description' => ['required'],
+            'genre' => ['required'],
 
         ];
     }

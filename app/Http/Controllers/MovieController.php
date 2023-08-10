@@ -3,14 +3,36 @@
   namespace App\Http\Controllers;
 
   use App\Models\Movie;
+  use Illuminate\Http\Request;
   use App\Http\Requests\MovieRequest;
   use App\Http\Requests\UpmovieRequest;
   use Illuminate\Support\Facades\Validator;
 
   class MovieController extends Controller
   {
-    public function index(){
-      $movies = Movie::all();
+    public function index(Request $request){
+      $keyword = $request->keyword;
+      $is_showing = $request->is_showing;
+      $flg_search=false;
+      $query = Movie::query();
+
+      if(!empty($keyword)){
+        $query->where('title','LIKE',"%{$keyword}%");
+        $query->orWhere('description','LIKE',"%{$keyword}%");
+        $flg_search=True;
+      }
+
+      if($is_showing != null){
+        $query->where('is_showing','=',$is_showing);
+        $flg_search=True;
+      }
+
+      if($flg_search){
+        $movies = $query->paginate(20);
+      }else{
+        $movies = Movie::paginate(20);
+      }
+      
       return view('movies',['movies' => $movies]);
     }
 

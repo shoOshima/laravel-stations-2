@@ -20,6 +20,10 @@
       映画タイトル:<br>
       <input name="title" value="{{ $movie->title }}"/>
       <br>
+      ジャンル:<br/>
+      <input name="genre" value="{{ old('genre') }}"/>
+      <br/>
+      <br>
       画像URL:<br/>
       <input name="image_url" value="{{ $movie->image_url }}"/>
       <br/>
