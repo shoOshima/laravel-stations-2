@@ -14,6 +14,7 @@
     </div>
     @endforeach
 @endif
+
   <h2>フォーム</h2>
   <form action="{{route('movies.update',['id'=>$movie->id])}}" method="POST">
   @method('PATCH')

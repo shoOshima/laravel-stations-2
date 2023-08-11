@@ -11,6 +11,7 @@
         "seed":"docker compose exec php-container php artisan db:seed",
         "migrate":"docker compose exec php-container php artisan migrate",
         "mig-cre":"docker compose exec php-container php artisan make:migration",
+        "makemodel":"docker compose exec php-container php artisan make:model",
         "reload1":"docker compose exec php-container php artisan config:cache",
         "reload2":"docker compose exec php-container php artisan config:clear",
         "reload3":"docker compose exec php-container composer dump-autoload -o"

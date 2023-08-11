@@ -63,7 +63,7 @@
       //そのままsubmit（削除）
       }else{
       //cancel
-      return false; 
+      return ; 
       }
       });
       });

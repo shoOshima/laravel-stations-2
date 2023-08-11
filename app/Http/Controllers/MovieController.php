@@ -3,6 +3,10 @@
   namespace App\Http\Controllers;
 
   use App\Models\Movie;
+  use App\Models\Genre;
+
+  use Illuminate\Support\Facades\DB;
+  
   use Illuminate\Http\Request;
   use App\Http\Requests\MovieRequest;
   use App\Http\Requests\UpmovieRequest;
@@ -46,14 +50,29 @@
     }
 
     public function edit(int $id){
-      $movie = Movie::where('id',$id)->first();
+      $movie = Movie::where('id',$id)->with('genre')->first();
+
       return view('edit',['movie' => $movie]);
     }
 
     public function update(int $id,UpmovieRequest $request){
 
-      $movie = Movie::where('id',$id)->first()->update($request->validated());
-   //   $movie = $m->update($request->validated());
+      $movie = DB::transaction(function() use($request,$id){
+        $data = $request->validated();
+        $genru = Genre::firstOrCreate(['name' => $data['genre']]);
+        $movie = Movie::where('id',$id)->first()->update([
+                                'title' => $data['title'],
+                                'image_url' => $data['image_url'],
+                                'published_year' => $data['published_year'],
+                                'is_showing' => $data['is_showing'],
+                                'description' => $data['description'],
+                                'genre_id' => $genru->id
+        ]);
+        return $movie;
+      });
+
+
+
         if($movie){
           return redirect()
             ->route('movies');
@@ -64,7 +83,21 @@
     }
 
     public function store(MovieRequest $request){
-      $movie = Movie::create($request->validated());
+
+        
+      $movie = DB::transaction(function() use($request){
+        $data = $request->validated();
+        $genru = Genre::firstOrCreate(['name' => $data['genre']]);
+        $movie = Movie::create([
+                                'title' => $data['title'],
+                                'image_url' => $data['image_url'],
+                                'published_year' => $data['published_year'],
+                                'is_showing' => $data['is_showing'],
+                                'description' => $data['description'],
+                                'genre_id' => $genru->id
+        ]);
+        return $movie;
+      });
 
         if($movie){
           return redirect()
