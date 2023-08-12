@@ -38,9 +38,9 @@
     <tbody>
         @foreach ( $schedules as $sch)
         <tr>
-            <td>{{ $sch->start_time}}</td>
+            <td>{{ date_format($sch->start_time,'H:i')}}</td>
 
-            <td>{{ $sch->end_time}}</td>
+            <td>{{ date_format($sch->end_time,'H:i')}}</td>
         </tr>
         @endforeach
     </tbody>
