@@ -52,9 +52,9 @@
       return view('adminMovies',['movies' => $movies]);
     }
 
-    public function admin_movie_detail(int $id){
+    // public function admin_movie_detail(int $id){
 
-    }
+    // }
 
     public function create(){
       return view('createMovies');

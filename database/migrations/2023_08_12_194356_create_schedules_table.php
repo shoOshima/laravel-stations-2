@@ -30,8 +30,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        $table->dropForeign(['movie_id']);
-        $table->dropIndex(['movie_id']);
         Schema::dropIfExists('schedules');
     }
 }

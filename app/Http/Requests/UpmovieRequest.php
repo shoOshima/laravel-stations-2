@@ -30,16 +30,16 @@ class UpmovieRequest extends FormRequest
          $data = $this->all();
             // dd($this->boolean('is_showing[0]'));
          // 前処理
-         if (isset($data['is_showing'])){
-            $a = $data['is_showing'];
-            if($a[0]=="on"){
-                $data['is_showing'] =(boolean)true;
-            }else{
-                $data['is_showing'] =0;
-            }
-        }else{
-            $data['is_showing']=0;
-        }
+        //  if (isset($data['is_showing'])){
+        //     $a = $data['is_showing'];
+        //     if($a[0]=="on"){
+        //         $data['is_showing'] =(boolean)true;
+        //     }else{
+        //         $data['is_showing'] =0;
+        //     }
+        // }else{
+        //     $data['is_showing']=0;
+        // }
 
          return $data;
      }

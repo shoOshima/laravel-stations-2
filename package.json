@@ -15,7 +15,9 @@
         "makemodel":"docker compose exec php-container php artisan make:model",
         "reload1":"docker compose exec php-container php artisan config:cache",
         "reload2":"docker compose exec php-container php artisan config:clear",
-        "reload3":"docker compose exec php-container composer dump-autoload -o"
+        "reload3":"docker compose exec php-container composer dump-autoload -o",
+        "doRe":"docker-compose exec nginx-container bash",
+        "doCh":"chown www-data storage/ -R"
     },
     "devDependencies": {
         "axios": "^0.21",
