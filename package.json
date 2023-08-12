@@ -10,6 +10,7 @@
         "production": "mix --production",
         "seed":"docker compose exec php-container php artisan db:seed",
         "migrate":"docker compose exec php-container php artisan migrate",
+        "migRe":"docker compose exec php-container php artisan migrate:refresh",
         "mig-cre":"docker compose exec php-container php artisan make:migration",
         "makemodel":"docker compose exec php-container php artisan make:model",
         "reload1":"docker compose exec php-container php artisan config:cache",

@@ -14,4 +14,8 @@ class Movie extends Model
         return $this->belongsTo(Genre::class,'genre_id','id');
     }
 
+    public function schedules(){
+        return $this->hasMany(Schedule::class);
+    }
+
 }

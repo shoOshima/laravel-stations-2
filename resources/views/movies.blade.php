@@ -42,7 +42,7 @@
     <tbody>
         @foreach ( $movies as $movie)
         <tr>
-            <td>{{ $movie->title}}</td>
+            <td><a href="{{route('movies.detail',['id'=>$movie->id]);}}">{{ $movie->title}}</a></td>
             <td>{{ $movie->image_url}}</td>
             
             @if($movie->is_showing==1)

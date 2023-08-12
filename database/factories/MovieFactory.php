@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Genre;
 
 class MovieFactory extends Factory
 {
@@ -13,12 +14,14 @@ class MovieFactory extends Factory
      */
     public function definition()
     {
+        $genreId = Genre::insertGetId(['name' => $this->faker->realText(20)]);
         return [
             'title' => $this->faker->unique()->word,
             'image_url' => $this->faker->imageUrl(),
             'published_year' => $this->faker->year,
             'description' => $this->faker->realText(20),
             'is_showing' => $this->faker->boolean,
+            'genre_id' => $genreId
         ];
     }
 }

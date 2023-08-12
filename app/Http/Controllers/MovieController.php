@@ -4,6 +4,7 @@
 
   use App\Models\Movie;
   use App\Models\Genre;
+  use App\Models\Schedule;
 
   use Illuminate\Support\Facades\DB;
   
@@ -38,6 +39,12 @@
       }
       
       return view('movies',['movies' => $movies]);
+    }
+
+    public function detail(int $id){
+      $movie = Movie::where('id',$id)->with('genre')->first();
+      $schedules = Schedule::where('movie_id',$movie->id)->orderBy('start_time', 'asc')->get();
+      return view ('movieDetail',['movie'=>$movie,'schedules'=>$schedules]);
     }
 
     public function admin_movies(){
