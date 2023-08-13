@@ -35,12 +35,6 @@ class CreateScheduleRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation()
-    {
-        // $data['start'] = new Carbon($this->start_time_date." ".$this->start_time_time);
-        // $data['end']= new Carbon($this->end_time_date." ".$this->end_time_time);
-        // $this->merge($data);
-    }
     public function withValidator($validator)
     {
         
