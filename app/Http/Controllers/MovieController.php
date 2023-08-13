@@ -52,9 +52,10 @@
       return view('adminMovies',['movies' => $movies]);
     }
 
-    // public function admin_movie_detail(int $id){
-
-    // }
+    public function admin_movie_detail(int $id){
+      $movie = Movie::where('id',$id)->with('genre')->with('schedules')->first();
+      return view('adminMovieDetail',['movie'=>$movie]);
+    }
 
     public function create(){
       return view('createMovies');
@@ -122,7 +123,7 @@
     public function destroy(int $id){
 
       $movie = Movie::where('id',$id)->firstOrFail()->delete();
-   //   $movie = $m->update($request->validated());
+
      if($movie){
       return redirect()->route('movies')->with('message','成功');
      }else{

@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Schedule::factory(30)->create();
-       $this->call(SheetTableSeeder::class);
+      $this->call(ScheduleTableSeeder::class);
+      Schedule::factory(30)->create();
+      $this->call(SheetTableSeeder::class);
+      
     }
 }

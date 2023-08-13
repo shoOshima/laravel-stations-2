@@ -28,21 +28,23 @@ Route::get('/getPractice', [PracticeController::class,'getPractice']);
 Route::get('/movies',[MovieController::class,'index']);
 Route::get('/movies/{id}',[MovieController::class,'detail'])->name('movies.detail');
 Route::get('/admin/movies',[MovieController::class,'admin_movies'])->name('movies');
-//Route::get('/admin/movies/{id}',[MovieController::class,'admin_movie_detail'])->name('admin.movie');
+
 
 Route::get('/admin/movies/{id}/edit',[MovieController::class,'edit'])->name('movies.edit');
 Route::patch('/admin/movies/{id}/update',[MovieController::class,'update'])->name('movies.update');
 Route::get('/admin/movies/create',[MovieController::class,'create']);
+Route::get('/admin/movies/{id}',[MovieController::class,'admin_movie_detail'])->name('admin.movie');
 
 Route::get('/sheets',[SheetController::class,'index']);
 
 Route::post('/admin/movies/store',[MovieController::class,'store'])->name('movie.store');
 Route::delete('/admin/movies/{id}/destroy',[MovieController::class,'destroy'])->name('movies.destroy');
 
+Route::post('/admin/movies/{id}/schedules/store',[ScheduleController::class,'store'])->name('admin.sch.store');
 Route::get('/admin/schedules',[ScheduleController::class,'index']);
-Route::get('/admin/schedules/{id}',[ScheduleController::class,'index']);
-Route::get('/admin/movies/{id}/schedules/create',[ScheduleController::class,'index']);
-Route::get('/admin/schedules/{scheduleId}/edit',[ScheduleController::class,'index']);
-Route::patch('/admin/schedules/{id}/update',[ScheduleController::class,'index']);
-Route::delete('/admin/schedules/{id}/update',[ScheduleController::class,'index']);
+Route::get('/admin/schedules/{id}',[ScheduleController::class,'schedulesForMovie'])->name('admin.sch.detail');
+Route::get('/admin/movies/{id}/schedules/create',[ScheduleController::class,'create'])->name('admin.sch.create');
+Route::get('/admin/schedules/{scheduleId}/edit',[ScheduleController::class,'edit'])->name('admin.sch.edit');
+Route::patch('/admin/schedules/{id}/update',[ScheduleController::class,'update']);
+Route::delete('/admin/schedules/{id}/destroy',[ScheduleController::class,'destroy'])->name('admin.sch.destory');
 

@@ -18,9 +18,9 @@
             <td><img src="{{ $movie->image_url}}" /></td>
             <td>{{ $movie->published_year}}</td>
             @if($movie->is_showing==1)
-                <td>公開中</td>
+                <td>上映中</td>
             @else
-                <td>公開予定</td>
+                <td>上映予定</td>
             @endif
             <td>{{ $movie->description}}</td>
         </tr>
@@ -28,6 +28,7 @@
 </table>
 
 <h1>上映スケジュール</h1>
+<a href="{{route('admin.sch.detail',['id'=>$movie->id]);}}">上映スケジュール管理</a>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -36,10 +37,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ( $schedules as $sch)
+        @foreach ( $movie->schedules as $sch)
         <tr>
-            <td>{{ date('H:i',strtotime($sch->start_time)) }}</td>
-            <td>{{ date('H:i',strtotime($sch->end_time)) }}</td>
+            <td>{{ $sch->start_time }}</td>
+            <td>{{ $sch->end_time }}</td>
         </tr>
         @endforeach
     </tbody>
