@@ -33,6 +33,7 @@
         <tr>
             <th scope="col">上映開始時刻</th>
             <th scope="col">上映終了時刻</th>
+            <th scope="col">予約</th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +41,13 @@
         <tr>
             <td>{{ date('H:i',strtotime($sch->start_time)) }}</td>
             <td>{{ date('H:i',strtotime($sch->end_time)) }}</td>
+            <td>
+                <form method="GET" action="movies">
+                    <input type="hidden" name="date" value="{{ date('YYYY-MM-DD',strtotime($sch->start_time)) }}"/>
+                <button type="submit" class="btn btn-prymary">座席を予約する</button>
+
+                </form>
+            </td>
         </tr>
         @endforeach
     </tbody>

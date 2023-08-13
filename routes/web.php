@@ -5,6 +5,7 @@ use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,6 @@ Route::get('/admin/schedules/{scheduleId}/edit',[ScheduleController::class,'edit
 Route::patch('/admin/schedules/{id}/update',[ScheduleController::class,'update']);
 Route::delete('/admin/schedules/{id}/destroy',[ScheduleController::class,'destroy'])->name('admin.sch.destory');
 
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/sheets',[ReservationController::class,'index']);
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/reservations/create',[ReservationController::class,'index']);
+Route::post('/reservations/store',[ReservationController::class,'index']);
