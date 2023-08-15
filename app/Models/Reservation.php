@@ -12,4 +12,8 @@ class Reservation extends Model
         'is_canceled' => false,
     ];
     protected $guarded = ['created_at', 'updated_at'];
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class,'id','schedule_id');
+    }
 }

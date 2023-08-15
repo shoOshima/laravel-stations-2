@@ -7,6 +7,7 @@
   use App\Models\Schedule;
   use App\Models\Sheet;
   use App\Models\Reservation;
+  use Carbon\CarbonImmutable;
 
   use Illuminate\Support\Facades\DB;
   
@@ -22,9 +23,15 @@
   {
     public function index(Request $request){
       $date = $request->date;
+      if(!$date){
+        abort(400);
+      }
+      
       $movie_id = $request->route('movie_id');
       $schedule_id = $request->route('schedule_id');
-      $sheets = Sheet::all();
+      $sheets = Sheet::with(['reservation'=>function($q)use($schedule_id){
+        $q->where('schedule_id','=',$schedule_id);
+      }])->get();
       return view('sheetsReservation',['sheets' => $sheets,'movie_id'=>$movie_id,'sch_id'=>$schedule_id,'date'=>$date]);
     }
 
@@ -33,6 +40,19 @@
       $schedule_id = $request->route('schedule_id');
       $date = $request->date;
       $sheet_id = $request->sheetId;
+      if(!$date || !$sheet_id){
+        abort(400);
+      }
+
+      $reserv = Reservation::where([
+        ['schedule_id','=',$schedule_id],
+        ['sheet_id','=',$sheet_id] 
+      ])->first();
+
+      if($reserv){
+        abort(400);
+      }
+
       return view('sheetReservationCreate',
         ['movie_id'=>$movie_id,'sch_id'=>$schedule_id,'date'=>$date,'sheet_id'=>$sheet_id]);
     }
@@ -58,15 +78,36 @@
      
     }
 
-    public function destroy(int $id){
+    public function admIndex(){
 
-      $movie = Movie::where('id',$id)->firstOrFail()->delete();
+      $r = Reservation::with('schedule')->get();
 
-     if($movie){
-      return redirect()->route('movies')->with('message','成功');
-     }else{
-      return redirect()->route('movies')->with('message','失敗');
-     }
+      $reserv = Reservation::whereHas('schedule',function($q){
+        $q->whereDate('end_time','>',date("Y-m-d H:i:s"));
+      })->get();
+
+      return view('adminReservation',['reserv'=>$reserv]);
     }
+
+    public function admCreate(){
+      return response("test");
+    }
+
+    public function admStore(){
+      return response("test");
+    }
+
+    public function admDetail(){
+      return response("test");
+    }
+
+    public function admUpdate(){
+      return response("test");
+    }
+
+    public function admDestory(){
+      return response("test");
+    }
+
 
   }
