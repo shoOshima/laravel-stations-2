@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateReservationRequest extends FormRequest
@@ -28,7 +30,8 @@ class CreateReservationRequest extends FormRequest
             'sheet_id' => ['required'],
             'name' => ['required'],
             'email' => ['required', 'email:strict,dns'],
-            'date' => ['required', 'date_format:Y-m-d']
+            'date' => ['required', 'date_format:Y-m-d'],
+            'schedule_id' => Rule::unique('reservations')->where('sheet_id',$this->sheet_id)
         ];
     }
 }

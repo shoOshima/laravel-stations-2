@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
+    protected $attributes = [
+        'is_canceled' => false,
+    ];
+    protected $guarded = ['created_at', 'updated_at'];
 }

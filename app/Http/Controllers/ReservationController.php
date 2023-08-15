@@ -5,119 +5,57 @@
   use App\Models\Movie;
   use App\Models\Genre;
   use App\Models\Schedule;
+  use App\Models\Sheet;
+  use App\Models\Reservation;
 
   use Illuminate\Support\Facades\DB;
   
   use Illuminate\Http\Request;
   use App\Http\Requests\MovieRequest;
   use App\Http\Requests\UpmovieRequest;
+
+  use App\Http\Requests\CreateReservationRequest;
   use Illuminate\Support\Facades\Validator;
+
 
   class ReservationController extends Controller
   {
     public function index(Request $request){
-      $keyword = $request->keyword;
-      $is_showing = $request->is_showing;
-      $flg_search=false;
-      $query = Movie::query();
+      $date = $request->date;
+      $movie_id = $request->route('movie_id');
+      $schedule_id = $request->route('schedule_id');
+      $sheets = Sheet::all();
+      return view('sheetsReservation',['sheets' => $sheets,'movie_id'=>$movie_id,'sch_id'=>$schedule_id,'date'=>$date]);
+    }
 
-      if(!empty($keyword)){
-        $query->where('title','LIKE',"%{$keyword}%");
-        $query->orWhere('description','LIKE',"%{$keyword}%");
-        $flg_search=True;
-      }
+    public function create(Request $request){
+      $movie_id = $request->route('movie_id');
+      $schedule_id = $request->route('schedule_id');
+      $date = $request->date;
+      $sheet_id = $request->sheetId;
+      return view('sheetReservationCreate',
+        ['movie_id'=>$movie_id,'sch_id'=>$schedule_id,'date'=>$date,'sheet_id'=>$sheet_id]);
+    }
 
-      if($is_showing != null){
-        $query->where('is_showing','=',$is_showing);
-        $flg_search=True;
-      }
+    public function store(CreateReservationRequest $request){
+      $data= $request->validated();
 
-      if($flg_search){
-        $movies = $query->paginate(20);
-      }else{
-        $movies = Movie::paginate(20);
-      }
+      $reserv = Reservation::where([
+          ['schedule_id','=', $data['schedule_id']],
+          ['sheet_id','=',$data['sheet_id']] 
+      ])->first();
       
-      return view('movies',['movies' => $movies]);
-    }
+      $sch= Schedule::where('id',$data['schedule_id'])->with('movie')->first();
 
-    public function detail(int $id){
-      $movie = Movie::where('id',$id)->with('genre')->first();
-      $schedules = Schedule::where('movie_id',$movie->id)->orderBy('start_time', 'asc')->get();
-      return view ('movieDetail',['movie'=>$movie,'schedules'=>$schedules]);
-    }
-
-    public function admin_movies(){
-      $movies = Movie::all();
-      return view('adminMovies',['movies' => $movies]);
-    }
-
-    public function admin_movie_detail(int $id){
-      $movie = Movie::where('id',$id)->with('genre')->with('schedules')->first();
-      return view('adminMovieDetail',['movie'=>$movie]);
-    }
-
-    public function create(){
-      return view('createMovies');
-    }
-
-    public function edit(int $id){
-      $movie = Movie::where('id',$id)->with('genre')->first();
-
-      return view('edit',['movie' => $movie]);
-    }
-
-    public function update(int $id,UpmovieRequest $request){
-
-      $movie = DB::transaction(function() use($request,$id){
-        $data = $request->validated();
-        $genru = Genre::firstOrCreate(['name' => $data['genre']]);
-        $movie = Movie::where('id',$id)->first()->update([
-                                'title' => $data['title'],
-                                'image_url' => $data['image_url'],
-                                'published_year' => $data['published_year'],
-                                'is_showing' => $data['is_showing'],
-                                'description' => $data['description'],
-                                'genre_id' => $genru->id
-        ]);
-        return $movie;
-      });
-
-
-
-        if($movie){
-          return redirect()
-            ->route('movies');
-        }else{
-          return view('createMovies')
-            ->with('error','失敗');
-        }
-    }
-
-    public function store(MovieRequest $request){
-
+      if($reserv){
         
-      $movie = DB::transaction(function() use($request){
-        $data = $request->validated();
-        $genru = Genre::firstOrCreate(['name' => $data['genre']]);
-        $movie = Movie::create([
-                                'title' => $data['title'],
-                                'image_url' => $data['image_url'],
-                                'published_year' => $data['published_year'],
-                                'is_showing' => $data['is_showing'],
-                                'description' => $data['description'],
-                                'genre_id' => $genru->id
-        ]);
-        return $movie;
-      });
-
-        if($movie){
-          return redirect()
-            ->route('movies');
-        }else{
-          return view('createMovies')
-            ->with('error','失敗');
-        }
+        return redirect()->route('reserv.showsheet',['movie_id'=>$sch->movie->id,'schedule_id'=>$data['schedule_id'],'date'=>$data['date']]);
+      }else{
+        Reservation::create($request->validated());
+        return redirect()
+            ->route('movies.detail',['id'=>$sch->movie->id]);
+      }
+     
     }
 
     public function destroy(int $id){

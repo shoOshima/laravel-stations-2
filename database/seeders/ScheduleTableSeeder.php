@@ -40,7 +40,7 @@ class ScheduleTableSeeder extends Seeder
 
     private function createMovie(): Movie
     {
-        $genreId = Genre::insertGetId(['name' => 'ジャンル']);
+        $genreId = Genre::insertGetId(['name' => 'ジャンルseed']);
         $movieId = Movie::insertGetId([
             'title' => '最初からある映画',
             'image_url' => 'https://techbowl.co.jp/_nuxt/img/6074f79.png',

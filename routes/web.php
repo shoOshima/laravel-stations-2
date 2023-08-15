@@ -49,6 +49,6 @@ Route::get('/admin/schedules/{scheduleId}/edit',[ScheduleController::class,'edit
 Route::patch('/admin/schedules/{id}/update',[ScheduleController::class,'update']);
 Route::delete('/admin/schedules/{id}/destroy',[ScheduleController::class,'destroy'])->name('admin.sch.destory');
 
-Route::get('/movies/{movie_id}/schedules/{schedule_id}/sheets',[ReservationController::class,'index']);
-Route::get('/movies/{movie_id}/schedules/{schedule_id}/reservations/create',[ReservationController::class,'index']);
-Route::post('/reservations/store',[ReservationController::class,'index']);
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/sheets?date={date}',[ReservationController::class,'index'])->name('reserv.showsheet');
+Route::get('/movies/{movie_id}/schedules/{schedule_id}/reservations/create',[ReservationController::class,'create'])->name('reserv.create');
+Route::post('/reservations/store',[ReservationController::class,'store'])->name('reserv.store');

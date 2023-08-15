@@ -20,9 +20,11 @@ class CreateReservationsTable extends Migration
             $table->foreignId('sheet_id')->constrained();
             $table->string('email',255);
             $table->string('name',255);
-            $table->boolean('is_canceled');
+            $table->boolean('is_canceled')->default(false);
             $table->timestamps();
             $table->index(['schedule_id','sheet_id']);
+            $table->unique(['schedule_id','sheet_id']);
+        
         });
     }
 
