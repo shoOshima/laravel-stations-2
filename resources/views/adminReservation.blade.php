@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <a class="btn btn-primary" href="{{route('adm.reserv.create')}}">予約追加</a>
     <table>
         <tr>
             <th>映画作品</th>

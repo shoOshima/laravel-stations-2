@@ -8,6 +8,7 @@
   use App\Models\Sheet;
   use App\Models\Reservation;
   use Carbon\CarbonImmutable;
+  use Carbon\Carbon;
 
   use Illuminate\Support\Facades\DB;
   
@@ -80,21 +81,38 @@
 
     public function admIndex(){
 
-      $r = Reservation::with('schedule')->get();
+      $re = Reservation::with('schedule')->get();
 
       $reserv = Reservation::whereHas('schedule',function($q){
-        $q->whereDate('end_time','>',date("Y-m-d H:i:s"));
+        $q->whereDate('end_time','>=',Carbon::now());
       })->get();
-
+      // new CarbonImmutable('2050-01-01 00:00:00')
+      // date("Y-m-d H:i:s")
       return view('adminReservation',['reserv'=>$reserv]);
     }
 
     public function admCreate(){
-      return response("test");
+      $sch = Schedule::with('reservation')->get();
+      return view('adminReservationCreate',['sch'=>$sch]);
     }
 
-    public function admStore(){
-      return response("test");
+    public function admStore(CreateReservationRequest $request){
+      $data= $request->validated();
+
+      $reserv = Reservation::where([
+          ['schedule_id','=', $data['schedule_id']],
+          ['sheet_id','=',$data['sheet_id']] 
+      ])->first();
+      
+      $sch= Schedule::where('id',$data['schedule_id'])->with('movie')->first();
+
+      if($reserv){
+        
+        return redirect()->route('adm.reserv.index');
+      }else{
+        Reservation::create($request->validated());
+        return redirect()->route('adm.reserv.index');
+      }
     }
 
     public function admDetail(){
