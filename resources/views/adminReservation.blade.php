@@ -9,6 +9,7 @@
             <th>日時</th>
             <th>名前</th>
             <th>メールアドレス</th>
+            <th>編集</th>
         </tr>
     @foreach ($reserv as $r)
         <tr>
@@ -17,6 +18,7 @@
             <td>{{ $r->date }}</td>
             <td>{{ $r->name }}</td>
             <td>{{ $r->email }}</td>
+            <td><a href="{{route('adm.reserv.detail',['id'=>$r->id]}}">編集</a></td>
         </tr>
     @endforeach
     <table>

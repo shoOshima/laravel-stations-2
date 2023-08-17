@@ -115,8 +115,11 @@
       }
     }
 
-    public function admDetail(){
-      return response("test");
+    public function admDetail(Request $request){
+      $reserv_id = $request->route('id');
+      $reserv=Reservation::where('id',$reserv_id)->with('schedule')->first();
+
+      return view('adminReservationDetail',['reserv'=>$reserv]);
     }
 
     public function admUpdate(){

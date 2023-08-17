@@ -24,11 +24,11 @@ class CreateAdminReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'movie_id' => ['required'],
-            'schedule_id' => ['required'],
+            'schedule_id' => ['required',Rule::unique('reservations')->where('sheet_id',$this->sheet_id)->ignore($this->schedule_id)],
             'sheet_id' => ['required'],
             'name' => ['required'],
             'email' => ['required', 'email:strict,dns'],
+            'date' => ['required', 'date_format:Y-m-d'],
         ];
     }
 }
