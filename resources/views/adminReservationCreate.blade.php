@@ -14,6 +14,10 @@
 <form action="{{route('adm.reserv.store')}}" method="post">
   @csrf
   <div class="form-group">
+    <label for="exampleFormControlInput1">映画ID</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="0" name="movie_id">
+  </div>
+  <div class="form-group">
     <label for="exampleFormControlInput1">メールアドレス</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">
   </div>
@@ -23,11 +27,12 @@
   </div>
   <div class="form-group">
     <label for="exampleFormControlInput1">スケジュールID</label>
-    <select name="schedule_id" onchange="outputSelectedValueAndText(this);">
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="予約者名" name="schedule_id">
+    <!-- <select name="schedule_id" onchange="outputSelectedValueAndText(this);">
       @foreach($sch as $s)
         <option value="{{$s->id}}">mID:{{$s->movie_id}}_sch:{{$s->id}}_start:{{$s->start_time}}</option>
       @endforeach
-    </select>
+    </select> -->
   </div>
   <div class="form-group">
     <label for="exampleFormControlInput1">シートID</label>

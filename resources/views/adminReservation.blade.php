@@ -14,11 +14,11 @@
     @foreach ($reserv as $r)
         <tr>
             <td>{{ $r->schedule['0']->movie_id}}</td>
-            <td>{{ $r->sheet_id }}</td>
+            <td>{{ strtoupper($r->sheet->row.$r->sheet->column) }}</td>
             <td>{{ $r->date }}</td>
             <td>{{ $r->name }}</td>
             <td>{{ $r->email }}</td>
-            <td><a href="{{route('adm.reserv.detail',['id'=>$r->id]}}">編集</a></td>
+            <td><a href="{{route('adm.reserv.detail',['id'=>$r->id]);}}">編集</a></td>
         </tr>
     @endforeach
     <table>

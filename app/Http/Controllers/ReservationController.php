@@ -17,6 +17,10 @@
   use App\Http\Requests\UpmovieRequest;
 
   use App\Http\Requests\CreateReservationRequest;
+
+  use App\Http\Requests\CreateAdminReservationRequest;
+  use App\Http\Requests\UpAdminReservationRequest;
+
   use Illuminate\Support\Facades\Validator;
 
 
@@ -96,23 +100,20 @@
       return view('adminReservationCreate',['sch'=>$sch]);
     }
 
-    public function admStore(CreateReservationRequest $request){
+    public function admStore(CreateAdminReservationRequest $request){
       $data= $request->validated();
 
-      $reserv = Reservation::where([
-          ['schedule_id','=', $data['schedule_id']],
-          ['sheet_id','=',$data['sheet_id']] 
-      ])->first();
+      // $reserv = Reservation::where([
+      //     ['schedule_id','=', $data['schedule_id']],
+      //     ['sheet_id','=',$data['sheet_id']] 
+      // ])->first();
       
-      $sch= Schedule::where('id',$data['schedule_id'])->with('movie')->first();
-
-      if($reserv){
-        
-        return redirect()->route('adm.reserv.index');
-      }else{
+      // if($reserv){  
+      //   return redirect()->route('adm.reserv.index');
+      // }else{
         Reservation::create($request->validated());
         return redirect()->route('adm.reserv.index');
-      }
+      // }
     }
 
     public function admDetail(Request $request){
@@ -122,12 +123,42 @@
       return view('adminReservationDetail',['reserv'=>$reserv]);
     }
 
-    public function admUpdate(){
-      return response("test");
+    public function admUpdate(UpAdminReservationRequest $request){
+      $data= $request->validated();
+      $reserv_id = $request->route('id');
+
+      //空席チェック
+      $reservCheck = Reservation::where([
+        ['id','<>',$reserv_id],
+        ['schedule_id','=', $data['schedule_id']],
+        ['sheet_id','=',$data['sheet_id']] 
+      ])->first();
+
+      if($reservCheck){
+        return response("予約あり");
+      }else{
+
+        $reserv = Reservation::where('id',$reserv_id)
+          ->first()->update([
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'schedule_id' => $data['schedule_id'],
+            'sheet_id' => $data['sheet_id'],
+            'date' => $data['date'],
+          ]);
+          return redirect()->route('adm.reserv.index');
+      }
     }
 
-    public function admDestory(){
-      return response("test");
+    public function admDestory(int $reserv_id){
+      $reserv = Reservation::where('id',$reserv_id)
+        ->firstOrFail()->delete();
+
+      if($reserv){
+        return redirect()->route('adm.reserv.index')->with('message','成功');
+      }else{
+        return redirect()->route('adm.reserv.index')->with('message','失敗');
+      }
     }
 
 

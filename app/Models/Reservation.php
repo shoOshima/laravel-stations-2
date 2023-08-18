@@ -16,4 +16,8 @@ class Reservation extends Model
     public function schedule(){
         return $this->hasMany(Schedule::class,'id','schedule_id');
     }
+
+    public function sheet(){
+        return $this->hasOne(sheet::class,'id','sheet_id');
+    }
 }

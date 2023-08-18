@@ -10,13 +10,18 @@
 @endif
 
 <h1>予約編集フォーム</h1>
+<form action="{{route('adm.reserv.destory',['id'=>$reserv->id]);}}" method="POST">
+            @method('DELETE')
+            @csrf
+            <input type="submit" value="削除" class="btn-dell">
+</form>
 
 <form action="{{route('adm.reserv.update',['id'=>$reserv->id])}}" method="post">
-  @method('PUT')
+  @method('PATCH')
   @csrf
   <div class="form-group">
     <label for="exampleFormControlInput1">映画作品ID</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email" value="{{ $reserv->schedule[0]->movie_id }}">
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="movie_id" value="{{ $reserv->schedule[0]->movie_id }}">
   </div>
   <div class="form-group">
     <label for="exampleFormControlInput1">メールアドレス</label>
@@ -41,6 +46,8 @@
 
   <button type="submit" class="btn btn-success">席を予約する</button>
 </form>
+
+
 
 <script>
 function outputSelectedValueAndText(obj)
