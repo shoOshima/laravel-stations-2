@@ -28,11 +28,7 @@
   <div class="form-group">
     <label for="exampleFormControlInput1">スケジュールID</label>
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="予約者名" name="schedule_id">
-    <!-- <select name="schedule_id" onchange="outputSelectedValueAndText(this);">
-      @foreach($sch as $s)
-        <option value="{{$s->id}}">mID:{{$s->movie_id}}_sch:{{$s->id}}_start:{{$s->start_time}}</option>
-      @endforeach
-    </select> -->
+
   </div>
   <div class="form-group">
     <label for="exampleFormControlInput1">シートID</label>
@@ -62,7 +58,7 @@ function outputSelectedValueAndText(obj)
     var text  = obj.options[idx].text;  // 表示テキスト
  
     // 値とテキストをコンソールに出力
-    console.log('value = ' + value + ', ' + 'text = ' + text+'{{$sch['0']->reservation}}');
+    console.log('value = ' + value + ', ' + 'text = ' + text);
 
     var sheetSelect =document.getElementById("sheetId");
 }

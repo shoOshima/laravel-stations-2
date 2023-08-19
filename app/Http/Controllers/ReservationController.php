@@ -86,18 +86,18 @@
     public function admIndex(){
 
       $re = Reservation::with('schedule')->get();
-
+      $c=Reservation::count();
       $reserv = Reservation::whereHas('schedule',function($q){
         $q->whereDate('end_time','>=',Carbon::now());
       })->get();
       // new CarbonImmutable('2050-01-01 00:00:00')
       // date("Y-m-d H:i:s")
-      return view('adminReservation',['reserv'=>$reserv]);
+      return view('adminReservation',['reserv'=>$reserv,'c'=>$c]);
     }
 
     public function admCreate(){
-      $sch = Schedule::with('reservation')->get();
-      return view('adminReservationCreate',['sch'=>$sch]);
+      // $sch = Schedule::with('reservation')->get();
+      return view('adminReservationCreate'); //,['sch'=>$sch]);
     }
 
     public function admStore(CreateAdminReservationRequest $request){
@@ -111,7 +111,14 @@
       // if($reserv){  
       //   return redirect()->route('adm.reserv.index');
       // }else{
-        Reservation::create($request->validated());
+        // Reservation::create($request->validated());
+        Reservation::create([
+          'email' => $data['email'],
+          'name' => $data['name'],
+          'schedule_id' => $data['schedule_id'],
+          'sheet_id' => $data['sheet_id'],
+          'date' => $data['date'],
+        ]);
         return redirect()->route('adm.reserv.index');
       // }
     }
