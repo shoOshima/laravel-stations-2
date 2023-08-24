@@ -117,7 +117,7 @@
           'name' => $data['name'],
           'schedule_id' => $data['schedule_id'],
           'sheet_id' => $data['sheet_id'],
-          'date' => $data['date'],
+          'date' => Carbon::now() //$data['date'],
         ]);
         return redirect()->route('adm.reserv.index');
       // }
@@ -130,20 +130,20 @@
       return view('adminReservationDetail',['reserv'=>$reserv]);
     }
 
-    public function admUpdate(UpAdminReservationRequest $request){
+    public function admUpdate(int $reserv_id,UpAdminReservationRequest $request){
       $data= $request->validated();
-      $reserv_id = $request->route('id');
+    //  $reserv_id = $request->route('id');
 
       //空席チェック
-      $reservCheck = Reservation::where([
-        ['id','<>',$reserv_id],
-        ['schedule_id','=', $data['schedule_id']],
-        ['sheet_id','=',$data['sheet_id']] 
-      ])->first();
+      // $reservCheck = Reservation::where([
+      //   ['id','<>',$reserv_id],
+      //   ['schedule_id','=', $data['schedule_id']],
+      //   ['sheet_id','=',$data['sheet_id']] 
+      // ])->first();
 
-      if($reservCheck){
-        return response("予約あり");
-      }else{
+      // if($reservCheck){
+      //   return response("予約あり");
+      // }else{
 
         $reserv = Reservation::where('id',$reserv_id)
           ->first()->update([
@@ -151,10 +151,10 @@
             'name' => $data['name'],
             'schedule_id' => $data['schedule_id'],
             'sheet_id' => $data['sheet_id'],
-            'date' => $data['date'],
+            'date' => Carbon::now(),
           ]);
           return redirect()->route('adm.reserv.index');
-      }
+      // }
     }
 
     public function admDestory(int $reserv_id){

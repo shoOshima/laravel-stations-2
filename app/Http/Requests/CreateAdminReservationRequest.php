@@ -19,7 +19,7 @@ class CreateAdminReservationRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
+     *     'date' => ['required', 'date_format:Y-m-d'],
      * @return array
      */
     public function rules()
@@ -30,7 +30,7 @@ class CreateAdminReservationRequest extends FormRequest
             'sheet_id' => ['required'],
             'name' => ['required'],
             'email' => ['required', 'email:strict,dns'],
-            'date' => ['required', 'date_format:Y-m-d'],
+        
         ];
     }
 }

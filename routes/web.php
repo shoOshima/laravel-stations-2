@@ -57,6 +57,6 @@ Route::get('/admin/reservations/',[ReservationController::class,'admIndex'])->na
 Route::get('/admin/reservations/create',[ReservationController::class,'admCreate'])->name('adm.reserv.create');
 Route::post('/admin/reservations',[ReservationController::class,'admStore'])->name('adm.reserv.store');
 Route::get('/admin/reservations/{id}/edit',[ReservationController::class,'admDetail'])->name('adm.reserv.detail');
-Route::get('/admin/reservations/{id}',[ReservationController::class,'admDetail'])->name('adm.reserv.detail');
+Route::get('/admin/reservations/{id}',[ReservationController::class,'admDetail'])->name('adm.reserv.edit');
 Route::patch('/admin/reservations/{id}',[ReservationController::class,'admUpdate'])->name('adm.reserv.update');
 Route::delete('/admin/reservations/{id}',[ReservationController::class,'admDestory'])->name('adm.reserv.destory');
