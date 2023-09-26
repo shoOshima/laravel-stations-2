@@ -20,4 +20,8 @@ class Reservation extends Model
     public function sheet(){
         return $this->hasOne(sheet::class,'id','sheet_id');
     }
+
+    public function mail_user(){
+        return $this->hasOne(User::class,'email','email');
+    }
 }

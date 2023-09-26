@@ -5,6 +5,7 @@
   use Illuminate\Support\Facades\DB;
   use App\Models\Schedule;
   use App\Models\Movie;
+  use App\Models\Screen;
   use App\Http\Requests\CreateScheduleRequest;
 
   use Carbon\Carbon;
@@ -35,11 +36,25 @@
     public function store(CreateScheduleRequest $request){
       $data = $request->validated();
 
-      $schedule = Schedule::create([
+      $schedule = DB::transaction(function() use($request){
+        $data = $request->validated();
+        $start = $data['start_time_date']." ".$data['start_time_time'];
+        $end = $data['end_time_date']." ".$data['end_time_time'];
+        $schedule = Schedule::create([
           'movie_id' => $data['movie_id'],
-          'start_time' => $data['start_time_date']." ".$data['start_time_time'],
-          'end_time' => $data['end_time_date']." ".$data['end_time_time'],
-      ]);
+          'start_time' => $start,
+          'end_time' => $end,
+        ]);
+        Screen::create([
+          'screen' => $data['screen'],
+          'schedule_id' => $schedule->id,
+          'start_time' => $start,
+          'end_time' => $end
+        ]);
+        return $schedule;
+      });
+
+
       if($schedule){
         return redirect()->route('movies');
       }else{

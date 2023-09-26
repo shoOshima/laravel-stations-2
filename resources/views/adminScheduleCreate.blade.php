@@ -32,6 +32,10 @@
         <label for="inputEmail4">終了時間</label>
         <input type="time" class="form-control" id="inputEmail4" name="end_time_time">
       </div>
+      <div class="col-5">
+        <label for="inputEmail4">スクリーン</label>
+        <input type="number" max="3" min="1" class="form-control" id="inputEmail4" name="screen">
+      </div>
   </div>
   <button type="submit" class="btn btn-primary">登録</buton>
 </form>

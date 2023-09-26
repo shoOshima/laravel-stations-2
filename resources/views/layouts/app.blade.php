@@ -12,6 +12,15 @@
     <body class="bg-light">
         <nav class="navbar navbar-expand-lg navbar-light bg-navbar">
             <a class="navbar-brand" href="#">Laravel-Stations</a>
+            <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link>
+                </form>
         </nav>
         <div class="container">
             @yield('content')

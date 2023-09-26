@@ -8,21 +8,25 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "seed":"docker compose exec php-container php artisan db:seed",
-        "migrate":"docker compose exec php-container php artisan migrate",
-        "migRe":"docker compose exec php-container php artisan migrate:refresh",
-        "mig-cre":"docker compose exec php-container php artisan make:migration",
-        "makemodel":"docker compose exec php-container php artisan make:model",
-        "reload1":"docker compose exec php-container php artisan config:cache",
-        "reload2":"docker compose exec php-container php artisan config:clear",
-        "reload3":"docker compose exec php-container composer dump-autoload -o",
-        "doRe":"docker-compose exec nginx-container bash",
-        "doCh":"chown www-data storage/ -R"
+        "seed": "docker compose exec php-container php artisan db:seed",
+        "migrate": "docker compose exec php-container php artisan migrate",
+        "migRe": "docker compose exec php-container php artisan migrate:refresh",
+        "mig-cre": "docker compose exec php-container php artisan make:migration",
+        "makemodel": "docker compose exec php-container php artisan make:model",
+        "reload1": "docker compose exec php-container php artisan config:cache",
+        "reload2": "docker compose exec php-container php artisan config:clear",
+        "reload3": "docker compose exec php-container composer dump-autoload -o",
+        "doRe": "docker-compose exec nginx-container bash",
+        "doCh": "chown www-data storage/ -R"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.5.2",
+        "alpinejs": "^3.4.2",
+        "autoprefixer": "^10.4.2",
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.4.6",
+        "tailwindcss": "^3.1.0"
     }
 }

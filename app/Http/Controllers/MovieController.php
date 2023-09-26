@@ -24,6 +24,11 @@
       if(!empty($keyword)){
         $query->where('title','LIKE',"%{$keyword}%");
         $query->orWhere('description','LIKE',"%{$keyword}%");
+
+        //' or 1 = 1 or '
+        //  $movies = DB::table('movies')->whereRaw("title = '{$request->input('keyword')}'")->paginate(20);
+        //  $movies = DB::table('movies')->whereRaw("title = ?", [$request->input('keyword')])->paginate(20);
+
         $flg_search=True;
       }
 

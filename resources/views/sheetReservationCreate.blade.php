@@ -19,11 +19,11 @@
   @csrf
   <div class="form-group">
     <label for="exampleFormControlInput1">メールアドレス</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email" value="{{ Auth::user()->email }}">
   </div>
   <div class="form-group">
     <label for="exampleFormControlInput1">名前</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="予約者名" name="name">
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="予約者名" name="name" value="{{ Auth::user()->name }}">
   </div>
   <input type="hidden" name="schedule_id" value="{{ $sch_id }}"/>
   <input type="hidden" name="sheet_id" value="{{ $sheet_id }}"/>

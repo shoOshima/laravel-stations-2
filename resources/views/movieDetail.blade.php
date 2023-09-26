@@ -39,8 +39,8 @@
     <tbody>
         @foreach ( $schedules as $sch)
         <tr>
-            <td>{{ date('H:i',strtotime($sch->start_time)) }}</td>
-            <td>{{ date('H:i',strtotime($sch->end_time)) }}</td>
+            <td>{{ date('Y-m-d H:i',strtotime($sch->start_time)) }}</td>
+            <td>{{ date('Y-m-d H:i',strtotime($sch->end_time)) }}</td>
             <td>
                 <form method="GET" action="{{route('reserv.showsheet',['movie_id'=>$movie->id,'schedule_id'=>$sch->id,'date'=>date('Y-m-d',strtotime($sch->start_time))])}}">
                     <input type="hidden" name="date" value="{{ date('Y-m-d',strtotime($sch->start_time)) }}"/>
